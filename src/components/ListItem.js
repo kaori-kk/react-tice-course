@@ -5,10 +5,14 @@ function ListItem(props){
   console.log(items)
   const listItems = items.map(item => {
     return <div className="list" key={item.key}>
-          <p>{item.name}</p>
+          <h2>{item.name}</h2>
+          <button onClick={() => props.deleteItem(item.key)}>Delete</button>
           </div>})
   return (
-    <div>{listItems}</div>
+    <div>
+      {listItems}
+    </div>
+
   )
 }
 
