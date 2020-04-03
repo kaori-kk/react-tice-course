@@ -1,5 +1,6 @@
 import React from 'react';
 import ListItem from './ListItem'
+import '../Form.css'
 
 class Form extends React.Component {
   constructor(props){
