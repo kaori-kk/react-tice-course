@@ -1,41 +1,55 @@
 import React from 'react';
+import ListItem from './ListItem'
 
 class Form extends React.Component {
-  state = {
-    name: '',
-    submittedName: ''
+  constructor(props){
+    super(props);
+    this.state = {
+      items : [],
+      currentItem : {
+        name: '',
+        key: ''
+      }
+    }
+    this.handleInput = this.handleInput.bind(this)
+    this.addItem = this.addItem.bind(this)
   }
-
-  handleName= (event) => {
+  
+handleInput= (event) => {
     this.setState({
-      name: event.target.value,
-      
+      currentItem: {
+        name: event.target.value,
+        key: Date.now()
+      }
     });
   }
     
-  handleSubmit = (event) => {
+  addItem = (event) => {
     event.preventDefault();
-    this.setState({
-      submittedName: this.state.name
-    })
+    const newItem = this.state.currentItem;
+    if(newItem.text!==""){
+      const newItems=[...this.state.items, newItem]
+      this.setState({
+        items: newItems,
+        currentItem: {
+          name: '',
+          key: ''
+        }
+      })
+    }
   }
 
   render(){
     return (
-      <div>
-        <ul>
-          <li>{this.state.submittedName}</li>
-        </ul>
-        <form onSubmit={this.handleSubmit}>
-          <input 
-            value={this.state.name}
-            onChange={this.handleName}
-          />
-          <input
-              type='submit'
-              value='Add'
-          />
-        </form>
+      <div className="App">
+        <header>
+          <form id="to-do-form" onSubmit={this.addItem}>
+            <input type="text" placeholder="Enter task" value= {this.state.currentItem.name} onChange={this.handleInput}></input>
+            <button type="submit">Add</button>
+          </form>
+            <ListItem items={this.state.items} />
+
+        </header>
       </div>
     );
   }
